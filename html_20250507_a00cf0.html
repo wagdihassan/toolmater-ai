@@ -4,102 +4,429 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صانع الأدوات الشاملة - ToolMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
+            --secondary-color: #3a0ca3;
             --accent-color: #4895ef;
             --light-color: #f8f9fa;
             --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --danger-color: #f72585;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
         body {
-            font-family: 'Tajawal', Arial, sans-serif;
-            background-color: #f5f7fa;
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
             color: var(--dark-color);
-            margin: 0;
-            padding: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
         
+        /* تحسينات الهيدر */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 2rem 0;
+            padding: 3rem 0 4rem;
             text-align: center;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            opacity: 0.1;
         }
         
         .logo {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
         }
         
         .tagline {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .cta-button.secondary {
+            background-color: transparent;
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-button.secondary:hover {
+            border-color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* قسم الأدوات المحسّن */
+        .tools-section {
+            padding: 4rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            color: var(--secondary-color);
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
         }
         
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
             margin: 40px 0;
         }
         
         .tool-card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
             cursor: pointer;
             border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .tool-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(58, 12, 163, 0.05));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+        
+        .tool-card:hover::before {
+            opacity: 1;
         }
         
         .tool-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
             color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1);
         }
         
         .tool-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
         }
         
         .tool-desc {
             color: #6c757d;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .tool-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* قسم المميزات الجديد */
+        .features-section {
+            background-color: #f1f5f9;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .feature-desc {
+            color: #64748b;
             font-size: 0.95rem;
         }
         
-        footer {
+        /* قسم الـ CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 5rem 0;
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            opacity: 0.1;
+        }
+        
+        .cta-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .cta-desc {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        /* الفوتر المحسّن */
+        footer {
             background-color: var(--dark-color);
             color: white;
-            border-radius: 20px 20px 0 0;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
         }
         
         .creator {
             font-size: 0.9rem;
             opacity: 0.8;
+            margin-top: 10px;
+        }
+        
+        /* تأثيرات الحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        /* القائمة المنسدلة للجوال */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        /* التجاوبية */
+        @media (max-width: 992px) {
+            .logo {
+                font-size: 2.4rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -110,109 +437,275 @@
             .logo {
                 font-size: 2rem;
             }
+            
+            .cta-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- الهيدر المحسّن -->
     <header>
         <div class="container">
-            <div class="logo">ToolMaster</div>
-            <div class="tagline">صانع الأدوات الشاملة بالذكاء الاصطناعي</div>
-            <p>أداة واحدة لإنشاء جميع أدوات الذكاء الاصطناعي التي تحتاجها</p>
+            <div class="logo animate">ToolMaster</div>
+            <div class="tagline animate delay-1">منصة متكاملة لإنشاء أدوات الذكاء الاصطناعي بدون الحاجة للبرمجة</div>
+            <p class="animate delay-1">واجهة عربية سهلة لإنشاء ما تحتاجه من أدوات ذكية في دقائق</p>
+            <div class="animate delay-2">
+                <a href="#tools" class="cta-button">استكشف الأدوات</a>
+                <a href="#how-it-works" class="cta-button secondary">كيفية الاستخدام</a>
+            </div>
         </div>
     </header>
     
-    <div class="container">
-        <div class="tools-grid">
-            <!-- أداة توليد الصور -->
-            <div class="tool-card" onclick="navigateToTool('image-generator')">
-                <div class="tool-icon">
-                    <i class="fas fa-image"></i>
-                </div>
-                <h3 class="tool-title">مولد الصور بالذكاء الاصطناعي</h3>
-                <p class="tool-desc">أنشئ صورًا فريدة بناءً على أوصافك النصية باستخدام تقنيات الذكاء الاصطناعي المتقدمة</p>
-            </div>
+    <!-- قسم الأدوات المحسّن -->
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <h2 class="section-title animate">أدواتنا المتاحة</h2>
+            <p class="text-center animate delay-1" style="max-width: 800px; margin: 0 auto 40px; color: #64748b;">
+                اختر من بين مجموعة أدواتنا المتكاملة التي تغطي مختلف احتياجاتك في مجال الذكاء الاصطناعي
+            </p>
             
-            <!-- أداة صناعة الفيديو -->
-            <div class="tool-card" onclick="navigateToTool('video-maker')">
-                <div class="tool-icon">
-                    <i class="fas fa-video"></i>
+            <div class="tools-grid">
+                <!-- أداة توليد الصور -->
+                <div class="tool-card animate delay-1" onclick="navigateToTool('image-generator')">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="tool-title">مولد الصور بالذكاء الاصطناعي</h3>
+                    <p class="tool-desc">أنشئ صورًا فريدة بناءً على أوصافك النصية باستخدام أحدث تقنيات توليد الصور</p>
+                    <span class="tool-badge">جديد</span>
                 </div>
-                <h3 class="tool-title">صانع الفيديو من النصوص</h3>
-                <p class="tool-desc">حول النصوص إلى مقاطع فيديو احترافية مع صوت وحركات تلقائية</p>
-            </div>
-            
-            <!-- أداة بناء البوتات -->
-            <div class="tool-card" onclick="navigateToTool('chatbot-builder')">
-                <div class="tool-icon">
-                    <i class="fas fa-robot"></i>
+                
+                <!-- أداة صناعة الفيديو -->
+                <div class="tool-card animate delay-1" onclick="navigateToTool('video-maker')">
+                    <div class="tool-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="tool-title">صانع الفيديو الذكي</h3>
+                    <p class="tool-desc">حول النصوص إلى مقاطع فيديو احترافية مع صوت وحركات تلقائية</p>
+                    <span class="tool-badge">شائع</span>
                 </div>
-                <h3 class="tool-title">بناء بوتات المحادثة</h3>
-                <p class="tool-desc">أنشئ بوت محادثة ذكي يدعم العربية بدون الحاجة لخبرة برمجية</p>
-            </div>
-            
-            <!-- أداة أفكار المشاريع -->
-            <div class="tool-card" onclick="navigateToTool('ai-ideas')">
-                <div class="tool-icon">
-                    <i class="fas fa-lightbulb"></i>
+                
+                <!-- أداة بناء البوتات -->
+                <div class="tool-card animate delay-2" onclick="navigateToTool('chatbot-builder')">
+                    <div class="tool-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="tool-title">بناء بوتات المحادثة</h3>
+                    <p class="tool-desc">صمم بوت محادثة ذكي يدعم العربية بدون كتابة أي كود برمجي</p>
                 </div>
-                <h3 class="tool-title">مولد أفكار مشاريع الذكاء الاصطناعي</h3>
-                <p class="tool-desc">احصل على أفكار مبتكرة لمشاريع الذكاء الاصطناعي tailored لاحتياجاتك</p>
-            </div>
-            
-            <!-- أداة المحتوى التسويقي -->
-            <div class="tool-card" onclick="navigateToTool('marketing-content')">
-                <div class="tool-icon">
-                    <i class="fas fa-bullhorn"></i>
+                
+                <!-- أداة أفكار المشاريع -->
+                <div class="tool-card animate delay-2" onclick="navigateToTool('ai-ideas')">
+                    <div class="tool-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="tool-title">مولد أفكار المشاريع</h3>
+                    <p class="tool-desc">احصل على أفكار مبتكرة لمشاريع الذكاء الاصطناعي tailored لاحتياجاتك</p>
                 </div>
-                <h3 class="tool-title">محتوى تسويقي جاهز</h3>
-                <p class="tool-desc">أنشئ محتوى تسويقي مخصص لوسائل التواصل الاجتماعي والإعلانات</p>
-            </div>
-            
-            <!-- أداة إنشاء المواقع -->
-            <div class="tool-card" onclick="navigateToTool('website-builder')">
-                <div class="tool-icon">
-                    <i class="fas fa-globe"></i>
+                
+                <!-- أداة المحتوى التسويقي -->
+                <div class="tool-card animate delay-1" onclick="navigateToTool('marketing-content')">
+                    <div class="tool-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="tool-title">محتوى تسويقي جاهز</h3>
+                    <p class="tool-desc">أنشئ محتوى تسويقي مخصص لوسائل التواصل الاجتماعي والإعلانات</p>
+                    <span class="tool-badge">شائع</span>
                 </div>
-                <h3 class="tool-title">إنشاء موقع تلقائي</h3>
-                <p class="tool-desc">أنشئ موقعًا كاملًا تلقائيًا بناءً على وصفك البسيط</p>
-            </div>
-            
-            <!-- أداة كتابة المحتوى -->
-            <div class="tool-card" onclick="navigateToTool('content-writer')">
-                <div class="tool-icon">
-                    <i class="fas fa-pen-fancy"></i>
+                
+                <!-- أداة إنشاء المواقع -->
+                <div class="tool-card animate delay-2" onclick="navigateToTool('website-builder')">
+                    <div class="tool-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="tool-title">إنشاء موقع تلقائي</h3>
+                    <p class="tool-desc">أنشئ موقعًا كاملًا تلقائيًا بناءً على وصفك البسيط</p>
                 </div>
-                <h3 class="tool-title">كتابة المحتوى بالعربية</h3>
-                <p class="tool-desc">أنشئ محتوى عربي فريد واحترافي لأي غرض أو مجال</p>
-            </div>
-            
-            <!-- أداة التحليل التسويقي -->
-            <div class="tool-card" onclick="navigateToTool('marketing-analytics')">
-                <div class="tool-icon">
-                    <i class="fas fa-chart-line"></i>
+                
+                <!-- أداة كتابة المحتوى -->
+                <div class="tool-card animate delay-1" onclick="navigateToTool('content-writer')">
+                    <div class="tool-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <h3 class="tool-title">كتابة المحتوى بالعربية</h3>
+                    <p class="tool-desc">أنشئ محتوى عربي فريد واحترافي لأي غرض أو مجال</p>
                 </div>
-                <h3 class="tool-title">تحليلات تسويقية ذكية</h3>
-                <p class="tool-desc">احصل على رؤى وتحليلات تسويقية بناءً على بياناتك</p>
+                
+                <!-- أداة التحليل التسويقي -->
+                <div class="tool-card animate delay-2" onclick="navigateToTool('marketing-analytics')">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="tool-title">تحليلات تسويقية ذكية</h3>
+                    <p class="tool-desc">احصل على رؤى وتحليلات تسويقية بناءً على بياناتك</p>
+                    <span class="tool-badge">جديد</span>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
     
+    <!-- قسم المميزات الجديد -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title animate">لماذا تختار ToolMaster؟</h2>
+            <p class="text-center animate delay-1" style="max-width: 800px; margin: 0 auto 40px; color: #64748b;">
+                نقدم لك حلاً متكاملاً يجمع بين القوة والسهولة في استخدام أدوات الذكاء الاصطناعي
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-item animate delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="feature-title">واجهة عربية كاملة</h3>
+                    <p class="feature-desc">واجهة مستخدم مصممة خصيصًا للغة العربية مع دعم كامل للاتجاه RTL</p>
+                </div>
+                
+                <div class="feature-item animate delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">سرعة وسهولة</h3>
+                    <p class="feature-desc">أنشئ أدواتك في دقائق بدون الحاجة لأي خبرة تقنية</p>
+                </div>
+                
+                <div class="feature-item animate delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="feature-title">تكامل متقدم</h3>
+                    <p class="feature-desc">اتصال مباشر مع نماذج الذكاء الاصطناعي المتطورة</p>
+                </div>
+                
+                <div class="feature-item animate delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">حماية وخصوصية</h3>
+                    <p class="feature-desc">بياناتك تبقى خاصة وآمنة معنا</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم كيفية الاستخدام -->
+    <section id="how-it-works" class="tools-section" style="background-color: #f8fafc;">
+        <div class="container">
+            <h2 class="section-title animate">كيف تعمل المنصة؟</h2>
+            <p class="text-center animate delay-1" style="max-width: 800px; margin: 0 auto 40px; color: #64748b;">
+                ثلاث خطوات بسيطة تفصلك عن إنشاء أدوات الذكاء الاصطناعي الخاصة بك
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-item animate delay-1">
+                    <div class="feature-icon" style="color: var(--primary-color);">
+                        <span style="font-size: 2rem; font-weight: 700;">1</span>
+                    </div>
+                    <h3 class="feature-title">اختر الأداة</h3>
+                    <p class="feature-desc">اختر من بين مجموعة أدواتنا المتكاملة التي تناسب احتياجاتك</p>
+                </div>
+                
+                <div class="feature-item animate delay-1">
+                    <div class="feature-icon" style="color: var(--primary-color);">
+                        <span style="font-size: 2rem; font-weight: 700;">2</span>
+                    </div>
+                    <h3 class="feature-title">اضبط الإعدادات</h3>
+                    <p class="feature-desc">قم بتخصيص الأداة حسب احتياجاتك باستخدام واجهتنا البسيطة</p>
+                </div>
+                
+                <div class="feature-item animate delay-2">
+                    <div class="feature-icon" style="color: var(--primary-color);">
+                        <span style="font-size: 2rem; font-weight: 700;">3</span>
+                    </div>
+                    <h3 class="feature-title">احصل على النتائج</h3>
+                    <p class="feature-desc">استلم أداة جاهزة للاستخدام أو انشرها مباشرة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم الـ CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title animate">جاهز للبدء؟</h2>
+            <p class="cta-desc animate delay-1">انشئ أول أداة ذكاء اصطناعي لك الآن واستمتع بكل المميزات بدون أي تعقيدات</p>
+            <a href="#tools" class="cta-button animate delay-2">ابدأ مجانًا</a>
+        </div>
+    </section>
+    
+    <!-- الفوتر المحسّن -->
     <footer>
         <div class="container">
-            <p>ToolMaster - صانع الأدوات الشاملة بالذكاء الاصطناعي</p>
-            <p class="creator">By Wagdi Hassan</p>
+            <div class="footer-content">
+                <div class="footer-logo">ToolMaster</div>
+                
+                <div class="footer-links">
+                    <a href="#tools" class="footer-link">الأدوات</a>
+                    <a href="#features" class="footer-link">المميزات</a>
+                    <a href="#how-it-works" class="footer-link">كيفية الاستخدام</a>
+                    <a href="#" class="footer-link">الأسئلة الشائعة</a>
+                    <a href="#" class="footer-link">اتصل بنا</a>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                <div class="copyright">
+                    &copy; 2023 ToolMaster. جميع الحقوق محفوظة.
+                    <div class="creator">By Wagdi Hassan</div>
+                </div>
+            </div>
         </div>
     </footer>
     
     <script>
+        // دالة للتنقل بين الأدوات
         function navigateToTool(toolId) {
-            // هذه الدالة ستوجه المستخدم إلى الأداة المحددة
-            alert(`سيتم توجيهك إلى أداة ${toolId} - هذه الوظيفة قيد التطوير`);
-            // لاحقًا: window.location.href = `tools/${toolId}.html`;
+            // في النسخة النهائية سيتم توجيه المستخدم إلى الصفحة المطلوبة
+            alert(`سيتم توجيهك إلى أداة ${toolId}\n\nهذه الصفحة قيد التطوير حالياً`);
+            // window.location.href = `tools/${toolId}.html`;
         }
+        
+        // تأثيرات الظهور عند التمرير
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+            
+            // إضافة تأثيرات للبطاقات بشكل متدرج
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach((card, index) => {
+                card.style.transitionDelay = `${(index % 4) * 0.1}s`;
+            });
+        });
     </script>
 </body>
 </html>
